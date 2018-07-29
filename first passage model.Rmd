@@ -1,0 +1,40 @@
+---
+title: "Untitled"
+author: "Bingjun Zhou"
+date: "2018Äê7ÔÂ16ÈÕ"
+output: word_document
+---
+
+```{r}
+Trails<-1000
+b<-2
+T<-2
+A0<-2.2
+mu<-0.1
+Theta<-0.15
+dt<-0.001
+n<-T/dt
+ACC<-0
+plot(1000,10,type="l",ylim=c(0,5),xlim=c(0,2000))
+
+for(count in 1:Trails){
+  A<-vector("numeric",length=n)
+  A[1]<-A0
+  hit<-0
+  for(i in 1:n){
+    if(A[i]<b){
+      hit<-1;
+      break;
+    }
+    A[i+1]<-A[i]+mu*A[i]*dt+Theta*A[i]*rnorm(1,0,1)*sqrt(dt)
+  }
+  ACC<-ACC+hit
+  x<-1:(length(A))
+  
+  lines(x,A,type="l")
+}
+
+lines(c(0,2000),c(b,b),col="red")
+print("The P(t>2): ")
+print(ACC/Trails)
+```
